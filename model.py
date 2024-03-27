@@ -4,7 +4,22 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
+class Movie(db.Model):
+    """A movie."""
 
+    __tablename__ = "movies"
+
+    movie_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    title = db.Column(db.String)
+    overview = db.Column(db.Text)
+    release_date = db.Column(db.DateTime)
+    poster_path = db.Column(db.String)
+
+    def __repr__(self):
+        return f"<Movie movie_id={self.movie_id} title={self.title}>"
+    
+
+    
 class User(db.Model):
     """A user."""
 
@@ -20,7 +35,7 @@ class User(db.Model):
 
 def connect_to_db(flask_app, db_uri="postgresql:///ratings", echo=True):
     flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
-    flask_app.config["SQLALCHEMY_ECHO"] = echo
+    flask_app.config["SQLALCHEMY_ECHO"] = False
     flask_app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
     db.app = flask_app
