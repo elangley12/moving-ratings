@@ -31,6 +31,7 @@ def create_rating(user, movie, score):
 
     return rating
 
+
 if __name__ == '__main__':
     from server import app
     connect_to_db(app)
