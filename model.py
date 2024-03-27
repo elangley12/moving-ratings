@@ -13,6 +13,10 @@ class Rating(db.Model):
     score = db.Column(db.Integer)
     movie_id = db.Column(db.Integer, db.ForeignKey("movies.movie_id"))
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+
+    movie = db.relationship("Movie", back_populates="ratings")
+    user = db.relationship("User", back_populates="ratings")
+
     def __repr__(self):
         return f"<Rating rating_id={self.rating_id} score={self.score}>"
     
