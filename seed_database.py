@@ -1,4 +1,4 @@
-""Script to seed database."""
+"""Script to seed database."""
 
 import os
 import json
@@ -17,3 +17,18 @@ model.db.create_all()
 
 with open('data/movies.json') as f:
     movie_data = json.loads(f.read())
+
+movies_in_db = []
+for movie in movie_data:
+    title, overview, poster_path = (
+        movie["title"],
+        movie["overview"],
+        movie["poster_path"],
+    )
+    release_date = datetime.strptime(movie["release_date"], "%Y-%m-%d")
+
+    db_movie = crud.create_movie(title, overview, release_date, poster_path)
+    movies_in_db.append(db_movie)
+
+model.db.session.add_all(movies_in_db)
+model.db.session.commit()
