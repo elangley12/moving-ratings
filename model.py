@@ -4,6 +4,19 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
+class Rating(db.Model):
+    """A movie rating."""
+
+    __tablename__ = "ratings"
+
+    rating_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    score = db.Column(db.Integer)
+    movie_id = db.Column(db.Integer, db.ForeignKey("movies.movie_id"))
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+    def __repr__(self):
+        return f"<Rating rating_id={self.rating_id} score={self.score}>"
+    
+    
 class Movie(db.Model):
     """A movie."""
 
